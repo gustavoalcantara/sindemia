@@ -37,6 +37,7 @@ Essa parte de Download e Descompactação poderia ser feita atráves de um servi
 ### Lendo a base de dados 
 Portanto, resolvi atribuir um jpeg do meu Ambiente. É interessante visualizar as variáveis de comorbidades para cada pessoa e o municipio a qual está relacionada
 ![Base de Dados](C:/Users/User/Desktop/Gustavo/Unicamp/Mestrado/curso_github_ime/sindemia_sp/sindemia_sp/img/base_covid.jpg)
+
 ## Manipulação dos dados.
 Como o trabalho é exploratório, pretendo utilizar os dados em futuras pesquisas, também acredito que as tudo o que ocorre no espaço geográfico se relaciona. Sempre tento trazer o caráter espacial como uma variável importante a ser discutida. Assim, utilizei o pacote [Geobr](https://github.com/ipeaGIT/geobr) para fazer download do shapefile dos municípios de São Paulo e que futuramente, as variáveis e informações aqui geradas, poderão ser utilizadas em outros programas e formatos de arquivos.
 
@@ -52,7 +53,6 @@ mun_sp <- dplyr::rename(mun_sp, codigo_ibge = 'code_muni')
 names (mun_sp)
 ```
 
-Teste
 
 
 
