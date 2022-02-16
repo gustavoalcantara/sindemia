@@ -1,0 +1,60 @@
+---
+title: "Sindemias e Covid-19 no Estado de São Paulo"
+author: "Gustavo Casteletti de Alcântara"
+date: "16/02/2022"
+output:
+  prettydoc::html_pretty:
+    theme: cerulean
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Trabalho Final do curso Relatório Reprodutiveis do Curso de Verão do IME da USP. 
+
+O presente trabalho é o resultado do curso de Relatórios Reprodutiveis do IME da USP sob a orientação da professora Beatriz Milz. 
+Pelos dados oficiais, a Pandemia de Covid-19 no Brasil até a presente data levou à obito mais de 640 mil pessoas em todo o Brasil. Grande parte destes óbitos são de pessoas que apresentam comorbidades (uma ou mais doenças) que, associadas à infecção pelo virús Sars-cov-2, resultam em grupos de risco da doença. Assim, de forma exploratória, é apresentado a relação entre uma ou mais comorbidades das pessoas que chegaram à óbito para os municípios do Estado de São Paulo.
+O banco de dados utilizado é de origem da Fundação Seade e disponível para reprodução e utilização.
+
+Para uma boa prática de Programação, é necessário limpar a base de dados do R. Portanto, aqui listo os comandos que realizo para deixar o ambiente mais clean possível. Vale ressaltar que a base de dados é de aproximadamente 800mb. Portanto, quanto menos arquivos estiver na minha RAM, melhor.
+
+##Preparando meu ambiente de trabalho
+
+### Limpando meu Ambiente de Trabalho
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+rm( list = ls( ) ) 
+graphics.off()
+gc(reset = TRUE)
+gc()
+```
+
+A base de dados encontra-se em um link disponível para [download](https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/casos_obitos_doencas_preexistentes.csv.zip). Porém, ela está disponível como um arquivo .zip, sendo necessária sua descompactação e também atribuição de seu caminho de destino.
+
+Essa parte de Download e Descompactação poderia ser feita atráves de um serviço da Web. Como o arquivo é grande (aproximadamente 850mb), seria interessante ter uma máquina virtual para realizar o armazenamento e a descompactação do arquivo. Em breve, espero poder realizar tal atividade.  
+
+### Lendo a base de dados 
+Portanto, resolvi atribuir um jpeg do meu Ambiente. É interessante visualizar as variáveis de comorbidades para cada pessoa e o municipio a qual está relacionada
+![Base de Dados](C:/Users/User/Desktop/Gustavo/Unicamp/Mestrado/curso_github_ime/sindemia_sp/sindemia_sp/img/base_covid.jpg)
+## Manipulação dos dados.
+Como o trabalho é exploratório, pretendo utilizar os dados em futuras pesquisas, também acredito que as tudo o que ocorre no espaço geográfico se relaciona. Sempre tento trazer o caráter espacial como uma variável importante a ser discutida. Assim, utilizei o pacote [Geobr](https://github.com/ipeaGIT/geobr) para fazer download do shapefile dos municípios de São Paulo e que futuramente, as variáveis e informações aqui geradas, poderão ser utilizadas em outros programas e formatos de arquivos.
+
+```{r include=FALSE}
+geobr::read_municipality(code_muni=35, year=2010) -> mun_sp
+```
+
+### Alteração do nome de uma variável para realizar um Join
+Aqui alterei o nome da variável que contém o código do município para realizar um Join futuramente com a base de dados. É melhor que as duas variáveis tenham o mesmo nome e que suas id's sejam iguais (isso é muito importante!)
+```{r}
+mun_sp <- dplyr::rename(mun_sp, codigo_ibge = 'code_muni')
+
+names (mun_sp)
+```
+
+Teste
+
+
+
+
+
