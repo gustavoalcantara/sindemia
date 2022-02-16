@@ -88,9 +88,10 @@ dplyr::select(dados,
   summarise(mean(idade)) |> 
   rename(idade_media_diabetes = 'mean(idade)')
 
-read.csv('C:/Users/User/Desktop/Gustavo/Unicamp/Dados_carto/dados_diabetes_cardio.csv)
+dados <- read.csv('dados_diabetes_cardio.csv')
 
 ```
+Teste
 
 
 
