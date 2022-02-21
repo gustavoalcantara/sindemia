@@ -70,7 +70,7 @@ ggplot2::ggplot(dados, aes(x=idade_media,
                      y=idade_media_diabetes))+
   geom_point()
 ```
-Salvo em 16/2
+Salvo em 20-2
 
 
 
