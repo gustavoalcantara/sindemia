@@ -35,3 +35,8 @@ dplyr::select(df,
   group_by(codigo_ibge)|>
   summarise(mean(idade)) |>
   rename(idade_media_diabetes = 'mean(idade)')
+
+dplyr::left_join(
+  mun_sp,
+  dados,
+  by='codigo_ibge')
