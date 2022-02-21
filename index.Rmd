@@ -1,7 +1,7 @@
 ---
 title: "Sindemias e Covid-19 no Estado de São Paulo"
 author: "Gustavo Casteletti de Alcântara"
-date: "16/02/2022"
+date: "21/02/2022"
 output:
   prettydoc::html_pretty:
     theme: cerulean
