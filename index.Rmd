@@ -32,7 +32,6 @@ Para uma boa prática de Programação, é necessário limpar a base de dados do
 rm( list = ls( ) ) 
 graphics.off()
 gc(reset = TRUE)
-gc()
 ```
 
 A base de dados encontra-se em um link disponível para [download](https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/casos_obitos_doencas_preexistentes.csv.zip). Porém, ela está disponível como um arquivo .zip, sendo necessária sua descompactação e também atribuição de seu caminho de destino.
@@ -128,7 +127,7 @@ Existe bastante coisas para se consertar, porém o primeiro passo foi dado.
 ### Créditos
 Agradeço à [Fundação Seade](https://www.seade.gov.br/) pela disponibilização dos dados e também à professora e monitores e monitoras do Curso. 
 Todo o conteúdo aqui disponibilizado pode ser replicado, desde que citada a fonte. 
-
+ vb
 
 
 
