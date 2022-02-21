@@ -108,11 +108,34 @@ ggplot2::ggplot(dados,
               caption='Fonte: Fundação Seade')
 ```
 
-##Representação Espacial
+## Representação Espacial
+
 ### O Pacote Geobr
 Como dito anteriormente, o pacote [Geobr](https://github.com/ipeaGIT/geobr) pode auxiliar muito na exportação/importação de arquivos geoespaciais quando necessário. Resolvi exportar o shapefile dos municípios do estado de São Paulo para o meu desktop e github e realizar um join com a tabela dos dados para representar as comorbidades de forma espacial.
 
-###Join das variáveis
+### Join das variáveis
+Através do left_join realizado pelo [Dplyr]("https://github.com/gustavoalcantara/sindemia/blob/master/limpeza_dados.R"), é possível relacionar as variáveis do .csv com a id  do .shp dos municipios. Assim, é simples elaborar um mapa temático com quebras naturais apresentando a idade média dos óbitos por cardiopatia nos municípios do Estado de São Paulo. 
+Essa elaboração foi realizada no QGis.
+```{r echo=FALSE}
+knitr::include_graphics("C:/Users/User/Desktop/Gustavo/Unicamp/Mestrado/sindemia/sindemia/teste.png")
+```
+
+## Conclusão
+Todo o aprendizado aqui adquirido foi relevante para apresentar de forma mais didática algumas das metodologias que utilizo em relação à análise de grandes bancos de dados e suas iterações com outros ambientes. Discorrer à respeito de sindemias e trazer os componentes espaciais em minhas análises é uma das atividades que gosto muito de realizar. 
+Gostei muito da integração entre o Rstudio e GitHub e pretendo utiliza-lá sempre que possível. 
+Existe bastante coisas para se consertar, porém o primeiro passo foi dado. 
+
+### Créditos
+Agradeço à [Fundação Seade](https://www.seade.gov.br/) pela disponibilização dos dados e também à professora e monitores e monitoras do Curso. 
+Todo o conteúdo aqui disponibilizado pode ser replicado, desde que citada a fonte. 
+
+
+
+
+
+
+
+
 
 
 
