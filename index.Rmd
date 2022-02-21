@@ -25,7 +25,7 @@ O banco de dados utilizado é de origem da Fundação Seade e disponível para r
 
 Para uma boa prática de Programação, é necessário limpar a base de dados do R. Portanto, aqui listo os comandos que realizo para deixar o ambiente mais clean possível. Vale ressaltar que a base de dados utilizada é de aproximadamente 800mb. Portanto, quanto menos arquivos estiver na minha RAM, melhor.
 
-###Preparando meu ambiente de trabalho
+##Preparando meu ambiente de trabalho
 
 ### Limpando meu Ambiente de Trabalho
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -48,7 +48,19 @@ Nessa etapa, há uma premissa importante que preciso ressaltar: acredito que tud
 Diante disso, utilizei o pacote [Geobr](https://github.com/ipeaGIT/geobr) para fazer download do shapefile dos municípios de São Paulo e que futuramente, as variáveis e informações aqui geradas, poderão ser utilizadas em outras análises para sustentar a minha hipótese. 
 
 ```{r include=FALSE}
-geobr::read_municipality(code_muni=35, year=2010) -> mun_sp
+#Trazendo os dados municipais para o ambiente
+geobr::read_municipality(code_muni=35, year=2010) ->mun_sp
+```
+```{r}
+dplyr::glimpse(mun_sp)
+```
+```{r}
+sf::write_sf(mun_sp, dsn='mun_sp', driver='ESRI Shapefile')
+```
+
+###Exportação do Shapefile
+```{r eval=FALSE, include=FALSE}
+sf::st_write(mun_sp, 'mun_sp.shp')
 ```
 
 ### Alteração do nome de uma variável para realizar um Join
@@ -63,10 +75,11 @@ names (mun_sp)
 O Intuito deste tópico é analisar, atráves do banco de dados, como as doenças de Diabetes e Cardiopatia se relacionam. Assim, a partir de uma breve [limpeza dos dados](https://github.com/gustavoalcantara/sindemia/blob/master/limpeza_dados.R), foi possível juntar as duas doenças e analisar a idade média dos óbitos para cada municipio de São Paulo. Portanto, da tabela de pouco mais de 4 milhões de registros individuais, consegui fazer o join das duas tabelas que necessito.   
 
 ```{r echo=FALSE}
-
 dados <- read.csv('dados_diabetes_cardio.csv')
 
 dplyr::glimpse(dados)
+
+write.csv2(dados, 'dados.csv', row.names = TRUE)
 ```
 ## Gráficos e interações
 Em um primeiro cenário de análise, é válido verificar a dispersão da idade média dessas comorbidades nos municípios paulistas. Essa atividade pode gerar insights sobre o agrupamento das idades médias e suas dispersões ("outliers"). 
@@ -94,6 +107,18 @@ ggplot2::ggplot(dados,
               y="Média de Idade por diabetes", 
               caption='Fonte: Fundação Seade')
 ```
+
+##Representação Espacial
+### O Pacote Geobr
+Como dito anteriormente, o pacote [Geobr](https://github.com/ipeaGIT/geobr) pode auxiliar muito na exportação/importação de arquivos geoespaciais quando necessário. Resolvi exportar o shapefile dos municípios do estado de São Paulo para o meu desktop e github e realizar um join com a tabela dos dados para representar as comorbidades de forma espacial.
+
+###Join das variáveis
+
+
+
+
+
+
 
 
 
