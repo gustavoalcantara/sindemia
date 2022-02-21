@@ -14,13 +14,18 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ## Trabalho Final do curso Relatório Reprodutiveis do Curso de Verão do IME da USP. 
 
-O presente trabalho é o resultado do curso de Relatórios Reprodutiveis do IME da USP sob a orientação da professora Beatriz Milz. 
-Pelos dados oficiais, a Pandemia de Covid-19 no Brasil até a presente data levou à obito mais de 640 mil pessoas em todo o Brasil. Grande parte destes óbitos são de pessoas que apresentam comorbidades (uma ou mais doenças) que, associadas à infecção pelo virús Sars-cov-2, resultam em grupos de risco da doença. Assim, de forma exploratória, é apresentado a relação entre uma ou mais comorbidades das pessoas que chegaram à óbito para os municípios do Estado de São Paulo.
+O presente trabalho é resultado do curso de [Relatórios Reprodutiveis](https://beatrizmilz.github.io/2022-curso-de-verao-ime-usp-relatorios/informacoes-gerais.html) do IME da USP sob a orientação da professora [Beatriz Milz](https://beatrizmilz.com/). A intenção é aplicar o conhecimento adquirido no Curso para a problemática da sindemia de Covid-19 nos municípios paulistas.
+
+## O Conceito de Sindemia
+O conceito de sindemia é tratado por [Singer e Clair, 2003](https://pubmed.ncbi.nlm.nih.gov/14716917/) como uma sinergia entre uma ou mais doenças. No exemplo citado, os autores analisaram como o entrelaçamento de uma ou mais doenças com contextos sociais e biopsicológicas produzem um novo paradigma à saúde pública de forma generalizada globalmente. 
+Pelos dados oficiais, a Pandemia de Covid-19 no Brasil até a presente data levou à obito mais de 640 mil pessoas em todo o Brasil. Grande parte destes óbitos são de pessoas que apresentam comorbidades (uma ou mais doenças) que, associadas à infecção pelo virús Sars-cov-2, resultam em [grupos de risco da doença](https://www.seade.gov.br/covid-19-81-das-vitimas-da-regiao-do-vale-sofriam-de-comorbidades/). Assim, de forma exploratória e sem o devido tratamento estatistico, apresentarei como as comorbidades de diabetes e cardiopatia se relacionam nos óbitos de Covid-19 nos municípios do Estado de São Paulo.
 O banco de dados utilizado é de origem da Fundação Seade e disponível para reprodução e utilização.
 
-Para uma boa prática de Programação, é necessário limpar a base de dados do R. Portanto, aqui listo os comandos que realizo para deixar o ambiente mais clean possível. Vale ressaltar que a base de dados é de aproximadamente 800mb. Portanto, quanto menos arquivos estiver na minha RAM, melhor.
+## Metodologia - Preparando a minha base de dados
 
-##Preparando meu ambiente de trabalho
+Para uma boa prática de Programação, é necessário limpar a base de dados do R. Portanto, aqui listo os comandos que realizo para deixar o ambiente mais clean possível. Vale ressaltar que a base de dados utilizada é de aproximadamente 800mb. Portanto, quanto menos arquivos estiver na minha RAM, melhor.
+
+###Preparando meu ambiente de trabalho
 
 ### Limpando meu Ambiente de Trabalho
 ```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
@@ -32,21 +37,22 @@ gc()
 
 A base de dados encontra-se em um link disponível para [download](https://raw.githubusercontent.com/seade-R/dados-covid-sp/master/data/casos_obitos_doencas_preexistentes.csv.zip). Porém, ela está disponível como um arquivo .zip, sendo necessária sua descompactação e também atribuição de seu caminho de destino.
 
-Essa parte de Download e Descompactação poderia ser feita atráves de um serviço da Web. Como o arquivo é grande (aproximadamente 850mb), seria interessante ter uma máquina virtual para realizar o armazenamento e a descompactação do arquivo. Em breve, espero poder realizar tal atividade.  
+Essa parte de Download e Descompactação poderia ser feita atráves de um serviço da Web. Como o arquivo é muito grande (aproximadamente 850mb), seria interessante ter uma máquina virtual para realizar o armazenamento e a descompactação do arquivo. Em breve, espero poder realizar tal atividade.  
 
 ### Lendo a base de dados 
-Portanto, resolvi atribuir um jpeg do meu Ambiente. É interessante visualizar as variáveis de comorbidades para cada pessoa e o municipio a qual está relacionada
+Portanto, resolvi atribuir um jpeg do meu Ambiente para demonstrar como as variáveis encontram-se. É interessante visualizar as variáveis de comorbidades para cada pessoa e o municipio a qual está relacionada
 ![Base de Dados](C:/Users/User/Desktop/Gustavo/Unicamp/Mestrado/curso_github_ime/sindemia_sp/sindemia_sp/img/base_covid.jpg)
 
 ## Manipulação dos dados
-Como o trabalho é exploratório, pretendo utilizar os dados em futuras pesquisas, também acredito que as tudo o que ocorre no espaço geográfico se relaciona. Sempre tento trazer o caráter espacial como uma variável importante a ser discutida. Assim, utilizei o pacote [Geobr](https://github.com/ipeaGIT/geobr) para fazer download do shapefile dos municípios de São Paulo e que futuramente, as variáveis e informações aqui geradas, poderão ser utilizadas em outros programas e formatos de arquivos.
+Nessa etapa, há uma premissa importante que preciso ressaltar: acredito que tudo o que ocorre no espaço geográfico relaciona-se de forma mais ou menos intensa. [Tobler, p.237](https://www.jstor.org/stable/143141?refreqid=excelsior%3Ac529766f408f528030ea904a74d546e7) em 1970 indicava que "todas as coisas estão relacionadas, mas coisas próximas estão mais relacionadas do que coisas distantes". Assim, compreender a interação das comorbidades e grupos de risco/óbitos no estado de São Paulo pode evidenciar ou não um padrão espacial de comorbidades em evidências. 
+Diante disso, utilizei o pacote [Geobr](https://github.com/ipeaGIT/geobr) para fazer download do shapefile dos municípios de São Paulo e que futuramente, as variáveis e informações aqui geradas, poderão ser utilizadas em outras análises para sustentar a minha hipótese. 
 
 ```{r include=FALSE}
 geobr::read_municipality(code_muni=35, year=2010) -> mun_sp
 ```
 
 ### Alteração do nome de uma variável para realizar um Join
-Aqui alterei o nome da variável que contém o código do município para realizar um Join futuramente com a base de dados. É melhor que as duas variáveis tenham o mesmo nome e que suas id's sejam iguais (isso é muito importante!)
+Aqui alterei o nome da variável que contém o código do município para realizar um [Join](https://dplyr.tidyverse.org/reference/mutate-joins.html) futuramente com a base de dados. É melhor que as duas variáveis tenham o mesmo nome e que suas id's sejam iguais. 
 ```{r}
 mun_sp <- dplyr::rename(mun_sp, codigo_ibge = 'code_muni')
 
@@ -54,7 +60,7 @@ names (mun_sp)
 ```
 
 ### Relação das Variáveis
-O Intuito deste tópico é analisar, atráves do banco de dados, como as doenças de Diabetes e Cardiopatia se relacionam. Assim, a partir de uma breve limpeza dos dados, foi possível juntar as duas doenças e analisar a idade média dos óbitos para cada municipio de São Paulo. Portanto, da tabela de pouco mais de 4 milhões de registros individuais, consegui fazer o join das duas tabelas que elaborei a partir do código disponível [aqui]().  
+O Intuito deste tópico é analisar, atráves do banco de dados, como as doenças de Diabetes e Cardiopatia se relacionam. Assim, a partir de uma breve [limpeza dos dados](https://github.com/gustavoalcantara/sindemia/blob/master/limpeza_dados.R), foi possível juntar as duas doenças e analisar a idade média dos óbitos para cada municipio de São Paulo. Portanto, da tabela de pouco mais de 4 milhões de registros individuais, consegui fazer o join das duas tabelas que necessito.   
 
 ```{r echo=FALSE}
 
@@ -64,7 +70,8 @@ dplyr::glimpse(dados)
 ```
 ## Gráficos e interações
 Em um primeiro cenário de análise, é válido verificar a dispersão da idade média dessas comorbidades nos municípios paulistas. Essa atividade pode gerar insights sobre o agrupamento das idades médias e suas dispersões ("outliers"). 
-Será que municípios que possuem idades médias mais avançadas possuem uma população mais idosa? Assim, elaborei um gráfico simples de dispersão para verificar como é essa distribuição. 
+Será que municípios que possuem idades médias mais avançadas possuem uma população mais idosa? 
+Assim, elaborei um gráfico simples de dispersão para verificar como é essa distribuição. 
 ```{r}
 library(ggplot2)
 ggplot2::ggplot(dados, aes(x=idade_media,
@@ -75,13 +82,21 @@ ggplot2::ggplot(dados, aes(x=idade_media,
               y="Média de Idade por diabetes", 
               caption='Fonte: Fundação Seade')
 ```
+
 Após isso, um gráfico de Boxplot pode ajudar a entender a interação entre as comorbidades, visualizar as médias e também verificar quais municípios encontram-se nos outliers. Assim:
 ```{r}
 ggplot2::ggplot(dados, 
                 mapping = aes(x=idade_media,
                               y=idade_media_diabetes))+
-  geom_boxplot()
+  geom_boxplot()+
+   labs(title = "Boxplot da média de idades dos óbitos nos municípios paulistas por comorbidades",
+              x="Média de Idade por cardiopatia",
+              y="Média de Idade por diabetes", 
+              caption='Fonte: Fundação Seade')
 ```
+
+
+
 
 
 
