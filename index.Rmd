@@ -74,6 +74,7 @@ ggplot2::ggplot(dados, aes(x=idade_media,
               x="Média de Idade por cardiopatia",
               y="Média de Idade por diabetes", 
               caption='Fonte: Fundação Seade')
+<<<<<<< HEAD
 ```
 Após isso, um gráfico de Boxplot pode ajudar a entender a interação entre as comorbidades, visualizar as médias e também verificar quais municípios encontram-se nos outliers. Assim:
 ```{r}
@@ -89,6 +90,16 @@ ggplot2::ggplot(dados,
 
 
 
+=======
+```
+Após isso, um gráfico de Boxplot pode ajudar a entender a interação entre as comorbidades, visualizar as médias e também verificar quais municípios encontram-se nos outliers. Assim:
+```{r}
+ggplot2::ggplot(dados, 
+                mapping = aes(x=idade_media,
+                              y=idade_media_diabetes))+
+  geom_boxplot()
+```
+>>>>>>> 06b5083b9859fbdacc13600cf2f5ca2c4042ed8d
 
 
 
